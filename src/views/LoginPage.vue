@@ -24,6 +24,7 @@
         <div><button class="btn" @click="onSubmit">Submit</button></div>
       </form>
     </div>
+    <img src="../assets/โทเกะจิบิ02.png" />
   </div>
 </template>
 
@@ -61,7 +62,11 @@ export default {
 
 <style>
 .login {
+  overflow: auto;
   text-align: center;
+}
+.login img {
+  width: 15%;
 }
 .container h1 {
   color: #000;
@@ -70,7 +75,7 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10%;
+  margin-top: 5%;
   width: 40%;
 }
 .card {

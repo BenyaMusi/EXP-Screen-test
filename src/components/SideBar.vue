@@ -62,7 +62,7 @@ export default {
 .sidebar {
   height: calc(100%);
   color: #fff;
-  background: rgb(10, 7, 63);
+  background: rgb(32, 30, 66);
   overflow: auto;
 }
 .menu {

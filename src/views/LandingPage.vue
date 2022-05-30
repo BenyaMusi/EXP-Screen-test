@@ -34,7 +34,7 @@
   text-align: center;
 }
 .landing h1 {
-  color: #fff;
+  color: rgb(152, 152, 152);
   margin-top: 5%;
 }
 .landing::-webkit-scrollbar-track {

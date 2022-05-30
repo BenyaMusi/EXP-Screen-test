@@ -25,7 +25,7 @@ export default {
 <style>
 .nav {
   height: var(--nav-height);
-  padding: 0px 30px;
+  padding: 0px 50px;
   background: linear-gradient(0deg, rgb(10, 7, 63) 0%, rgb(58, 48, 113) 100%);
   box-shadow: 0px 5px 5px rgb(138, 138, 138);
 }
