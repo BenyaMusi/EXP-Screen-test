@@ -62,35 +62,33 @@ export default {
 
 <style>
 .login {
+  top: 0px;
   overflow: auto;
   text-align: center;
 }
 .login img {
+  margin-top: 10px;
   width: 15%;
 }
 .container h1 {
+  font-size: 15px;
   color: #000;
 }
 .container {
-  display: block;
+  align-items: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5%;
-  width: 40%;
 }
 .card {
-  padding: 20px;
+  padding: 10px;
 }
 .form-group input {
-  margin-bottom: 20px;
-}
-.error {
-  animation-name: errorShake;
-  animation-duration: 0.3s;
+  margin-bottom: 5px;
 }
 .form-control {
-  width: 300px;
-  height: 30px;
+  font-size: 8px;
+  width: 100px;
+  height: 15px;
   border: 1px solid #ced4da;
 }
 .btn {
@@ -98,15 +96,16 @@ export default {
   background: linear-gradient(0deg, rgba(6, 14, 131, 1) 0%, rgba(12, 25, 180, 1) 100%);
   border: none;
   color: white;
-  height: 30px;
-  width: 80px;
-  margin-top: 30px;
+  font-size: 8px;
+  height: 20px;
+  width: 50px;
 }
 .btn:hover {
   background: rgb(0, 3, 255);
   background: linear-gradient(0deg, rgba(0, 3, 255, 1) 0%, rgba(2, 126, 251, 1) 100%);
 }
 .miss {
+  font-size: 8px;
   color: red;
 }
 .hide {
