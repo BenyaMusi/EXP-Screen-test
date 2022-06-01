@@ -37,6 +37,7 @@ body {
   background: rgb(255, 255, 255);
   --nav-height: 20px;
   --footer-height: 70px;
+  overflow: hidden;
 }
 .middel {
   height: calc(100vh - var(--nav-height));

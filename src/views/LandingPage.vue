@@ -1,81 +1,29 @@
 <template>
   <div class="landing">
-    <div v-bind:autoplay="true" v-bind:loop="true" id="carousel" class="carousel">
-      <input
-        class="carousel-active"
-        type="radio"
-        id="carousel-1"
-        name="carousel"
-        aria-hidden="true"
-        hidden
-        checked="checked"
-      />
-      <div class="carousel-item">
-        <!-- <div class="carousel-controls" aria-hidden="true">
-          <label for="carousel-3" class="carousel-control prev" title="Prev">«</label>
-          <label for="carousel-2" class="carousel-control next" title="Next">»</label>
-        </div> -->
-        <img src="../assets/Paradoxlive2.jpg" alt="First slide" />
-      </div>
-
-      <input
-        class="carousel-active"
-        type="radio"
-        id="carousel-2"
-        name="carousel"
-        aria-hidden="true"
-        hidden
-      />
-      <div class="carousel-item">
-        <!-- <div class="carousel-controls" aria-hidden="true">
-          <label for="carousel-1" class="carousel-control prev" title="Prev">«</label>
-          <label for="carousel-3" class="carousel-control next" title="Next">»</label>
-        </div> -->
-        <img src="../assets/bungou.png" alt="Blank image" />
-      </div>
-
-      <input
-        class="carousel-active"
-        type="radio"
-        id="carousel-3"
-        name="carousel"
-        aria-hidden="true"
-        hidden
-      />
-      <d class="carousel-item">
-        <!-- <div class="carousel-controls" aria-hidden="true">
-          <label for="carousel-2" class="carousel-control prev" title="Prev">«</label>
-          <label for="carousel-1" class="carousel-control next" title="Next">»</label>
-        </div> -->
-        <img src="../assets/juju2.jpg" />
-      </d>
-
-      <ol class="carousel-indicators" aria-label="Carousel navigation" aria-hidden="true">
-        <li>
-          <label
-            for="carousel-1"
-            class="carousel-indicator"
-            title="Jump to carousel item #1"
-            >_</label
-          >
-        </li>
-        <li>
-          <label
-            for="carousel-2"
-            class="carousel-indicator"
-            title="Jump to carousel item #2"
-            >_</label
-          >
-        </li>
-        <li>
-          <label
-            for="carousel-3"
-            class="carousel-indicator"
-            title="Jump to carousel item #3"
-            >_</label
-          >
-        </li>
-      </ol>
+    <div
+      class="slider-shape"
+      id="slider"
+      @mouseenter="stopSlider"
+      @mouseleave="startSlider"
+    >
+      <transition-group :name="direction ? 'slide-leave' : 'slide-enter'">
+        <img
+          class="image"
+          v-for="number in [sliderIndex]"
+          v-bind:key="number"
+          :src="sliderImages[Math.abs(sliderIndex) % sliderImages.length]"
+        />
+      </transition-group>
+    </div>
+    <div class="slider-nav">
+      <span
+        class="circle"
+        v-for="(img, index) in sliderImages"
+        v-bind:key="index"
+        :class="[sliderIndex === index ? 'active' : '']"
+        @click="sliderMap(index)"
+        ><span></span
+      ></span>
     </div>
     <p class="top_line">คาสิโนออนไลน์เต็มรูปแบบ ตื่นตาตื่นใจไปกับทุกการเดิมพัน</p>
     <div class="all_menu">
@@ -369,148 +317,96 @@ export default {
           Money: "300",
         },
       ],
+      sliderImages: [
+        require("../assets/Paradoxlive2.jpg"),
+        require("../assets/bungou.png"),
+        require("../assets/juju2.jpg"),
+      ],
+      //slider index
+      sliderIndex: 0,
+
+      // for image animation
+      direction: true,
     };
   },
   components: {
     FooterPage,
   },
+  created() {
+    // auto plat at page load
+    this.startSlider();
+  },
   methods: {
-    slidecontroller() {
-      var carousel = {
-        ittem: document.getElementById("carousel"),
-        interval: 2000,
-        items: this.carousel.getElementsByClassName("carousel-active"),
-        itemsLength: 0,
-        controls: this.carousel.getElementsByClassName("carousel-control"),
-        controlsLength: 0,
-      };
-      this.carouselTimer = setInterval(this.carouselPlay, carousel.interval);
-      carousel.itemsLength = carousel.items.length;
-      carousel.controlsLength = carousel.controls.length;
-
-      this.carouselControls();
+    startSlider() {
+      // set interval for auto play
+      this.intervalId = setInterval(() => {
+        this.next();
+      }, 5000);
     },
-    carouselControls() {
-      for (var i = this.carousel.controlsLength; i--; ) {
-        this.carousel.controls[i].addEventListener("click", this.carouselReset, false);
+    stopSlider() {
+      clearInterval(this.intervalId);
+    },
+    next() {
+      this.sliderIndex++;
+      this.sliderIndex > this.sliderImages.length - 1 ? (this.sliderIndex = 0) : "";
+      this.direction = false;
+    },
+    prev() {
+      this.sliderIndex--;
+      this.sliderIndex < 0 ? (this.sliderIndex = this.sliderImages.length - 1) : "";
+      this.direction = true;
+    },
+    sliderMap(index) {
+      if (this.sliderIndex <= index) {
+        this.direction = false;
+      } else {
+        this.direction = true;
       }
-    },
-    carouselPlay() {
-      for (var i = this.carousel.itemsLength; i--; ) {
-        if (this.carousel.items[i].checked) {
-          if (i !== this.carousel.itemsLength - 1) {
-            this.carousel.items[i + 1].checked = true;
-          } else if (i === this.carousel.itemsLength - 1) {
-            setTimeout(function () {
-              this.carousel.items[0].checked = true;
-            }, 0);
-          }
-        }
-      }
-    },
-    carouselReset() {
-      console.log(1);
-      clearInterval(this.carouselTimer);
-      this.carouselTimer = setInterval(this.carouselPlay, this.carousel.interval);
+      this.sliderIndex = index;
     },
   },
 };
 </script>
 
 <style>
-.carousel {
-  color: rgba(255, 255, 255, 0.326);
-  overflow: hidden;
+.slider-shape {
+  z-index: 1;
   position: relative;
+  width: 1250px;
+  height: 450px;
+  cursor: pointer;
 }
-
-.carousel-item {
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  transition: opacity 0.6s ease-in-out;
-  width: 100%;
+.circle {
+  display: inline-flex;
+  position: relative;
+  top: -10px;
+  left: 45%;
+  width: 6px;
+  height: 1px;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+  margin: 0px 2px;
 }
-
-.carousel-active:checked + .carousel-item {
+.circle.active {
   opacity: 1;
-  pointer-events: auto;
-  position: static;
+}
+.image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.carousel-item img {
+.landing .image,
+.landing .slider-shape {
   width: 100%;
   height: 85px;
   object-fit: cover;
-}
-
-.carousel-controls {
-  height: 100%;
-  width: 100%;
-}
-
-.carousel-control {
-  background: rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  font-size: 28px;
-  height: 100%;
-  line-height: 40px;
-  text-align: center;
-  transition: background 0.1s ease-in-out;
-  width: 50%;
-  z-index: 2;
-}
-
-.carousel-control:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.carousel-control.prev {
-  float: left;
-}
-
-.carousel-control.next {
-  float: right;
-}
-
-.carousel-active:checked + .carousel-item {
-  transition: opacity 0.6s ease-in;
-  opacity: 1;
-}
-
-.carousel-indicators {
-  bottom: 5%;
-  left: 5%;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  right: 5%;
-  text-align: center;
-  z-index: 2;
-}
-
-.carousel-indicators li {
-  display: inline-block;
-}
-
-.carousel-indicator {
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 15px;
-  padding: 0px 1px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  transition: background 0.1s ease-in-out;
-  display: inline-block;
-  position: relative;
-  top: -15px;
-}
-
-/* If you`re needing more than 3 banners, maybe you might be using another way to represent your info... ;-) */
-#carousel-1:checked ~ .carousel-indicators .carousel-indicator[for="carousel-1"],
-#carousel-2:checked ~ .carousel-indicators .carousel-indicator[for="carousel-2"],
-#carousel-3:checked ~ .carousel-indicators .carousel-indicator[for="carousel-3"] {
-  color: #ffffff;
 }
 
 .landing {
@@ -532,10 +428,10 @@ export default {
 }
 .landing .top_line {
   font-size: 5px;
+  text-align: center;
   margin: 0px;
   position: relative;
-  top: -10px;
-  text-align: center;
+  top: -8px;
 }
 .all_menu {
   display: grid;

@@ -7,15 +7,15 @@
           บาคาร่า คาสิโนออนไลน์ ที่ดีที่สุด เพื่อประสบการณ์ที่ดีของผู้เล่นอย่างแท้จริง
         </p>
         <div class="bot_img">
-          <div class="image">
+          <div class="pic">
             <img src="../assets/icon0103.jpg" />
             <span>Security</span>
           </div>
-          <div class="image">
+          <div class="pic">
             <img src="../assets/icon0204.jpg" />
             <span>Automatic</span>
           </div>
-          <div class="image">
+          <div class="pic">
             <img src="../assets/icon0417.jpg" />
             <span>Service 24/7</span>
           </div>
@@ -152,7 +152,7 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   text-align: center;
 }
-.bot_img .image {
+.bot_img .pic {
   border: 1px solid #ffffff61;
   border-radius: 3px;
   height: 25px;
